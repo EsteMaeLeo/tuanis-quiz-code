@@ -1,5 +1,26 @@
 :root{
-    --bgcolor: rgb(0, 120, 218);
+    --bgcolor: rgb(110, 179, 236);
     --textwhite: #FFf;
 
 }
+
+* {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: var(--bgcolor);
+    color: var(--grey);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 20vh;
+    flex-direction: column;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+  
+  header {
+    background: var(--secondary);
+    padding: 30px 25px;
+    border-bottom: 5px solid var(--primary);
+  }
