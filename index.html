@@ -1,35 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./assets/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Ubuntu:wght@400;700&display=swap"
+        rel="stylesheet">
     <title>Code Quiz</title>
 </head>
+
 <body>
 
     <header>
         <h1>Code Quiz Challenge</h1>
-        <a>View high scores</a>       
+        <a>View high scores</a>
         <h3>Time: <span id="timer"></span></h3>
-        
+
     </header>
 
-    <main>
-        <h1>Code Quiz Challenge</h1>
-        <p>Try to answer the following code-related questions within the time limit.
-            Keep in mind that incorrect answers will penalize your score/time
-            by ten seconds
-        </p>
-        <button class="btstart" id="start-quiz" type="button">Start</button>
+    <main id="main-quiz">
+        <section id="section-quiz">
+            <div class="continer-quiz" id="start-container">
+                <div class="info-quiz">
+                    <h1>Code Quiz Challenge</h1>
+                    <p>Try to answer the following code-related questions within the time limit.
+                    <p>Keep in mind that incorrect answers will penalize your score/time</p>
+                    <p> by ten seconds</p>
+                    </p>
+                    <button class="btstart" id="start-quiz" type="button">Start</button>
+                </div>
+            </div>
+
+            <!--Question Container-->
+            <div class="qcontainer" id="qqcontainer">
+                <h2 class="questionTitle">What does HTML stand for? </h2>
+                <ul class="listAnswers" id="answers"></ul>
+
+            </div>
+
+            <div id="score-results">
+
+            </div>
+
+            <div id="high-results">
+
+            </div>
+        </section>
     </main>
 
-    <footer>
+    <footer class="footer-id">
         &copy;2022 by Leonel Morales
     </footer>
 
     <script src="./assets/js/script.js"></script>
 
 </body>
+
 </html>

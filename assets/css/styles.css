@@ -11,12 +11,8 @@
   body {
     background: var(--bgcolor);
     color: var(--grey);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    min-height: 20vh;
-    flex-direction: column;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Ubuntu, Tahoma, sans-serif;
+    
   }
   
   header {
@@ -24,3 +20,41 @@
     padding: 30px 25px;
     border-bottom: 5px solid var(--primary);
   }
+
+  .continer-quiz{
+
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+
+  }
+
+  .info-quiz{
+      display: flex;
+      flex-direction:  column;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .qcontainer{
+    display: flex;
+    flex-direction:  column;
+    justify-content: center;
+    align-items: center; 
+    padding: 40px 20px;
+    margin: auto;
+    
+  }
+
+  .btstart{
+      padding: 10PX 0;
+      width: 100px;
+      text-align: center;
+  }
+
+
+.footer-id {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+}
