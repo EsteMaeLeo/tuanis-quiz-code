@@ -12,79 +12,86 @@
 </head>
 
 <body>
-    <body>
-        <!-- Simple navigation name of the page, high scores and timer-->
-        <nav class="navquiz">
-            <div class="container">
-                <div class="etquiz">Code Quiz Challenge</div>
-                <ul class="ulnav">
-                    <li>
-                        <a href="#">View high scores</a>
-                    </li>
-                    <li>
-                        Time: <span id="timer"></span>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <!--Welcome message and click button start quiz-->
-            <header class="header" id="container-message">
-            <div class="container">
-                <div class="info-quiz">
-                    <h1>Code Quiz Challenge</h1>
-                    <p>Try to answer the following code-related questions within the time limit.
-                    <p>Keep in mind that incorrect answers will penalize your score/time</p>
-                    <p> by ten seconds</p>
-                    </p>
-                    <div class="btncontainer">
-                        <div class="btn-start">
-                            <a href="#" class="btn-click btn-c1" id="start-quiz">Start/a>
-                        </div>
+    <!-- Simple navigation name of the page, high scores and timer-->
+    <nav class="navquiz">
+        <div class="container">
+            <div class="etquiz">Code Quiz Challenge</div>
+            <ul class="ulnav">
+                <li>
+                    <a href="#">View high scores</a>
+                </li>
+                <li>
+                    Time: <span id="timer"></span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<!--Welcome message and click button start quiz-->
+    <header class="header" id="container-message">
+        <div class="container">
+            <div class="info-quiz">
+                <h1>Code Quiz Challenge</h1>
+                <p>Try to answer the following code-related questions within the time limit.
+                <p>Keep in mind that incorrect answers will penalize your score/time</p>
+                <p> by ten seconds</p>
+                </p>
+                <div class="btncontainer">
+                    <div class="btn-start">
+                        <a href="#" class="btn-click btn-c1" id="start-quiz">Start</a>
                     </div>
-    
                 </div>
+
             </div>
+        </div>
+        </div>
+    </header>
+
+    <!--Container for questions-->
+    <section class="boxes" id="container-quiz">
+        <div class="container">
+            <div class="box">
+                <h2 class="title" id="title-question"></h2>
+                <ul id="questions" class="list-group">
+                    <li class="list-group-item" list-question="question-1">Item 1</li>
+                    <li class="list-group-item" list-question="question-2">Item 2</li>
+                    <li class="list-group-item" list-question="question-3">Item 3</li>
+                    <li class="list-group-item" list-question="question-4">Item 4</li>
+                </ul>
+                <div class="question-message"></div>
             </div>
-        </header>
-    
-        <section class="boxes" id="container-quiz">
-            <!--Container for questions-->
-            <div class="container">
-                <div class="box">
-                    <h2 class="title" id="title-question"></h2>
-                    <ul id="questions" class="list-group">
-                        <li class="list-group-item" list-question="question-1">Item 1</li>
-                        <li class="list-group-item" list-question="question-2">Item 2</li>
-                        <li class="list-group-item" list-question="question-3">Item 3</li>
-                        <li class="list-group-item" list-question="question-4">Item 4</li>
-                    </ul>
-                    <div class="question-message"></div>
-                </div>
-                
-                <!--container for the results-->
-                <div class="box" id="container-results">
-                    <h2>All done!</h2>
-                    <p>Your final score is <span class="span-score"></span></p>
-                    <form id="addForm" >
+        </div>
+    </section>
+
+    <!--container for the results-->
+    <section class="boxes">
+        <div class="container">
+            <div class="box" id="container-results">
+                <h2>All done!</h2>
+                <p>Your final score is <span class="span-score"></span></p>
+                <form id="addForm">
                     <label for=" addForm">Enter initials:</label>
-                        <input  class="form-initials"  type="text" id="item">
-                        <input class="btstart" type="submit" value="Submit">
-                    </form>
-                </div>
-                
-                 <!--for high score-->
-                <div class="box" id="container-hscore">
-                    <h2>High Scores</h2>
-                    <ul id="list-scores" class="lt-scores">
-                        <div>
-                            <button class="btstart" id="back">Go back</button>
-                            <button class="btstart" id="high-scores">Clear high scores</button>
-                        </div>
-                </div>
+                    <input class="form-initials" type="text" id="item">
+                    <input class="btstart" type="submit" value="Submit">
+                </form>
             </div>
-        </section>
-        <script src="jnew.js"></script>
+        </div>
+    </section>
+
+     <!--for high score-->
+    <section class="boxes">
+        <div class="container">
+            <div class="box" id="container-hscore">
+                <h2>High Scores</h2>
+                <ul id="list-scores" class="lt-scores">
+                    <div>
+                        <button class="btstart" id="back">Go back</button>
+                        <button class="btstart" id="high-scores">Clear high scores</button>
+                    </div>
+            </div>
+        </div>
+        </div>
+    </section>
+        <script src="./assets/js/script.js"></script>
     </body>
 
 </html>
