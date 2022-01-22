@@ -13,6 +13,7 @@
 
 <body>
     <body>
+        <!-- Simple navigation name of the page, high scores and timer-->
         <nav class="navquiz">
             <div class="container">
                 <div class="etquiz">Code Quiz Challenge</div>
@@ -26,8 +27,9 @@
                 </ul>
             </div>
         </nav>
-    
-        <header class="header" id="container-message">
+
+        <!--Welcome message and click button start quiz-->
+            <header class="header" id="container-message">
             <div class="container">
                 <div class="info-quiz">
                     <h1>Code Quiz Challenge</h1>
@@ -37,7 +39,7 @@
                     </p>
                     <div class="btncontainer">
                         <div class="btn-start">
-                            <a href="#" class="btn-click btn-c1" id="start-quiz">Click Me</a>
+                            <a href="#" class="btn-click btn-c1" id="start-quiz">Start/a>
                         </div>
                     </div>
     
@@ -47,6 +49,7 @@
         </header>
     
         <section class="boxes" id="container-quiz">
+            <!--Container for questions-->
             <div class="container">
                 <div class="box">
                     <h2 class="title" id="title-question"></h2>
@@ -58,7 +61,8 @@
                     </ul>
                     <div class="question-message"></div>
                 </div>
-    
+                
+                <!--container for the results-->
                 <div class="box" id="container-results">
                     <h2>All done!</h2>
                     <p>Your final score is <span class="span-score"></span></p>
@@ -68,7 +72,8 @@
                         <input class="btstart" type="submit" value="Submit">
                     </form>
                 </div>
-    
+                
+                 <!--for high score-->
                 <div class="box" id="container-hscore">
                     <h2>High Scores</h2>
                     <ul id="list-scores" class="lt-scores">
