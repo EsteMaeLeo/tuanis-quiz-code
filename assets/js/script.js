@@ -112,124 +112,225 @@ var quizQuestions = [
     }
 ]
 
-//get the main 
-var sectionQuiz = document.querySelector("#section-quiz");
+var userScore = {
+    name: "",
+    scoreRecord: 0
+};
 
-var submitEl =document.querySelector(".resultscore");
+//variables declarations
+var containerMessage = document.getElementById('container-message');
+var containerQuiz = document.getElementById('container-quiz');
+var containerResults = document.getElementById('container-results');
+var containerHscore = document.getElementById('container-hscore');
+
+var formE1 = document.querySelector("#task-form");
+//get items for questions
+var questionList = document.getElementById('questions');
 
 var timerEl = document.getElementById('timer');
-var buttonEl = document.getElementById('start-quiz');
-//start container
-var scontainerEl = document.getElementById('start-container');
-//container with question
-var qcontainerE1 = document.getElementById('qqcontainer');
-//elment to delete
-var tdeletestart = document.querySelector("#start-container");
-//keep backup start container 
-var bckstart;
+var arefStartQuiz = document.getElementById('start-quiz');
 
-var score = 0;
+var numQuestions = 0;
+var contQuestions = 0;
+var globalScore = 0;
+var timeLeft = 75;
 
-//start quiz function
-function startQuiz(event) {
-    //hide the start container 
-    var targetE1 = event.target;
-    event.preventDefault();
-    console.log(targetE1);
-    bckstart = tdeletestart;
-    tdeletestart.remove();
-    qcontainerE1.style.visibility = 'visible';
-    quizTimer()
-}
+//Function defenition section
 
-function quizTimer() {
-    var timeLeft = 60;
+//timer for the quiz ends when the timer is equal 0
+var quizTimer = function() {
+    timeLeft = 75;
 
     // interval of the quiz
     var timeInterval = setInterval(function () {
 
         if (timeLeft === 0) {
             timerEl.textContent = timeLeft;
-            endQuiz();
+            endQuiz(quizQuestions);
             clearInterval(timeInterval);
         } else {
 
         }
         timerEl.textContent = timeLeft;
+        //substract to the timer
         timeLeft--;
         //1000
-    }, 100);
+    }, 1000);
 }
 
-function endQuiz() {
+ var endQuiz = function(arrayQuestion) {
     
-    var qqcontainer = document.querySelector("#qqcontainer");
-    var  qqClass = qqcontainer.classList
-    qqcontainer.classList.remove("qcontainer");
-    console.log(qqClass);
-    //qqClass.remove("qcontainer");
-    //qqcontainer.remove();
-
-
-    //tasksToDoE1 = document.querySelector("#section-quiz");
-    //tasksToDoE1.appendChild(bckstart);
-    //qcontainerE1.style.visibility = 'hidden';
+    numQuestions = arrayQuestion.length;
+    contQuestions = 0;
     showResults();
 
    
 }
 //function create message with the result and for initials for the score
-function showResults(){
+var showResults = function(){
+    containerQuiz.style.display = "none";
+    containerResults.style.display = "grid";
 
-    //create an elemente DIV
-    var showEl = document.createElement("div");
-    showEl.className = "show-results";
-
-    var h3El = document.createElement("h3");
-    h3El.className = "h3-results";
-    h3El.innerHTML = "All done!";
-    showEl.appendChild(h3El);
-
-    h3El = document.createElement("h3");
-    h3El.className = "h3-results";
-    h3El.innerHTML = "Your final score is " + "<span>" + score + "</span></h3>";
-    showEl.appendChild(h3El);
-
-    h3El = document.createElement("label");
-    h3El.setAttribute("for", "initials");
-    h3El.innerHTML = "Enter initials:"
-    showEl.appendChild(h3El);
-
-    h3El = document.createElement("input");
-    h3El.setAttribute("type", "type");
-    h3El.setAttribute("name", "initials" );
-    h3El.setAttribute("id", "input-init" );
-    showEl.appendChild(h3El);
-
-    h3El = document.createElement("button");
-    h3El.setAttribute("type", "submit");
-    h3El.setAttribute("name", "initials" );
-    h3El.setAttribute("id", "btn-init" );
-    h3El.className = "btn-results";
-    h3El.innerHTML = "Submit"
-    showEl.appendChild(h3El);
-    submitEl.appendChild(showEl);
-    sectionQuiz.appendChild(submitEl);
 }
 
-function showHighScore(){
-console.log("submit");
+
+var randomdQuestions = function (arrayQuestion) {
+    //reorder the array of questions in random order
+    arrayQuestion = arrayQuestion.sort(function (a, b) { return 0.5 - Math.random() });
+    numQuestions = arrayQuestion.length;
+
 }
 
-//quizTimer();
-qcontainerE1.style.visibility = 'hidden';
-//function listen click and trigger the timer of the quiz
-buttonEl.addEventListener("click", startQuiz);
+var getStart = function () {
+    //fcontainer1.style.display = "none";
+    containerQuiz.style.display = "none";
+    containerResults.style.display = "none";
+    containerHscore.style.display = "none";
 
-submitEl.addEventListener("submit", showHighScore);
-
-
-var highScores = {
-    initials: "",
-    score: 0
 }
+
+
+//load questions into the html
+var loadQuestions = function (arrayQuestion) {
+    //get the question according index using counter and compre with the length of the array
+    if (contQuestions < numQuestions) {
+
+        //get the question
+        var questionValue = arrayQuestion[contQuestions].question;
+        //get the element to set the question into the elment
+        var questionId = document.getElementById('title-question');
+        var listQuestions = document.getElementsByClassName('list-group-item');
+
+        questionId.textContent = questionValue;
+
+        for (var i = 0; i < listQuestions.length; i++) {
+
+            //set each possible answet into the list
+            switch (i) {
+                case 0: listQuestions[i].textContent = arrayQuestion[contQuestions].answers.a;
+                    //set attribute with the option question to review later 
+                    listQuestions[i].setAttribute('list-question', arrayQuestion[contQuestions].answers.a[0]);
+                    break;
+                case 1: listQuestions[i].textContent = arrayQuestion[contQuestions].answers.b;
+                    //set attribute with the option question to review later 
+                    listQuestions[i].setAttribute('list-question', arrayQuestion[contQuestions].answers.b[0]);
+                    break;
+                case 2: listQuestions[i].textContent = arrayQuestion[contQuestions].answers.c;
+                    //set attribute with the option question to review later 
+                    listQuestions[i].setAttribute('list-question', arrayQuestion[contQuestions].answers.c[0]);
+                    break;
+                case 3: listQuestions[i].textContent = arrayQuestion[contQuestions].answers.d;
+                    //set attribute with the option question to review later 
+                    listQuestions[i].setAttribute('list-question', arrayQuestion[contQuestions].answers.d[0]);
+                    break;
+            }
+        }
+
+
+
+    }
+    else {
+        alert("fin");
+        containerQuiz.style.display = "none";
+        globalScore = timeLeft;
+
+    }
+}
+
+var startQuiz = function (event) {
+    //hide the start container 
+    event.preventDefault();
+    containerMessage.style.display = "none";
+    randomdQuestions(quizQuestions);
+    containerQuiz.style.display = "flex";
+    
+    loadQuestions(quizQuestions);
+    quizTimer()
+}
+
+var taskHandleQuiz = function (event) {
+
+    var questionAtt = event.target.getAttribute("list-question").toLowerCase();
+    console.log(questionAtt);
+    console.log(quizQuestions[contQuestions].correctAnswer);
+    if (quizQuestions[contQuestions].correctAnswer === questionAtt) {
+        alert("correct");
+        contQuestions++;
+        loadQuestions(quizQuestions)
+
+    } else {
+        alert("incorrect");
+        timeLeft = timeLeft -10;
+        contQuestions++;
+        loadQuestions(quizQuestions);
+    }
+
+
+}
+
+var eventMouseover = function (event) {
+    var questionAtt = event.target.getAttribute("list-question");
+    if (questionAtt) {
+        event.target.style.color = "orange"
+        event.target.font="Arial";
+        event.target.style.backgroundColor = "#8B7CCE";
+
+    }
+}
+
+var eventMouseout = function (event) {
+    // highlight the mouseout target
+
+    var questionAtt = event.target.getAttribute("list-question");
+    if (questionAtt) {
+        event.target.style.color = "White"
+        event.target.style.backgroundColor = "#6750CC";
+
+    }
+}
+
+var submitEvent = function(event){
+    
+    event.preventDefault();
+    containerResults.style.display = "none";
+    containerHscore.style.display = "flex";
+    containerHscore.style.flexDirection = "column";
+}
+
+var clearScore = function(){
+
+}
+
+var handleHigh = function(event){
+
+    var targetE1 = event.target;
+
+    //back button clicked
+    if (targetE1.matches(".bck-main")) {
+        containerMessage.style.display = "flex";
+        containerMessage.style.flexDirection = "column";
+        getStart();
+    } //clear score button was clicked
+    else if (targetE1.matches(".clr-score")) {
+        clearScore();
+    }
+}
+
+//event for move mouse in the list
+containerQuiz.addEventListener("mouseover", eventMouseover);
+
+//event for move mouse in the list
+containerQuiz.addEventListener("mouseout", eventMouseout);
+
+//event for start the quiz
+arefStartQuiz.addEventListener("click", startQuiz);
+
+//submit the score
+containerResults.addEventListener("submit", submitEvent);
+
+//event for high score
+containerHscore.addEventListener("click", handleHigh);
+
+containerQuiz.addEventListener("click", taskHandleQuiz);
+
+getStart();
