@@ -159,19 +159,22 @@ var loadTasks = function () {
     savedScores = JSON.parse(savedScores);
     //loop throgh savedTasks array
     for (var i = 0; i < savedScores.length; i++) {
-        //pass each task object into the createdTaskE1 function
-        createHighScore(savedScores[i]);
+        //pass each task object into the createHighScore function
+        createHighScore(savedScores[i], i);
     }
 
 }
 
-var createHighScore = function(savedScores){
+var createHighScore = function(savedScores, line){
 console.log(containerHscore);
+    //add 1 to line because start 0
+    line++;
+
     var listScore = document.getElementById('list-scores');  
     var createLi = document.createElement('li');
-    createLi.innerHTML = savedScores.name + savedScores.scoreRecord;
+    createLi.innerHTML = line + ". " + "Name: " + savedScores.name + " Score: " +savedScores.scoreRecord;
     listScore.appendChild(createLi);
-    containerHscore.appendChild(listScore);
+    //containerHscore.appendChild(listScore);
     console.log(containerHscore);
 }
 
@@ -269,7 +272,7 @@ var loadQuestions = function (arrayQuestion) {
 
     }
     else {
-        alert("fin");
+        // alert("fin");
         containerQuiz.style.display = "none";
         endQuestions = true;
         globalScore = timeLeft;
@@ -294,12 +297,12 @@ var taskHandleQuiz = function (event) {
     console.log(questionAtt);
     console.log(quizQuestions[contQuestions].correctAnswer);
     if (quizQuestions[contQuestions].correctAnswer === questionAtt) {
-        alert("correct");
+        //alert("correct");
         contQuestions++;
         loadQuestions(quizQuestions)
 
     } else {
-        alert("incorrect");
+        //alert("incorrect");
         timeLeft = timeLeft -10;
         contQuestions++;
         loadQuestions(quizQuestions);
