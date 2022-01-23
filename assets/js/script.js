@@ -134,8 +134,46 @@ var numQuestions = 0;
 var contQuestions = 0;
 var globalScore = 0;
 var timeLeft = 75;
+var endQuestions = false;
+var userArray = [];
 
 //Function defenition section
+
+var saveHighScores = function () {
+    var nameInput = document.querySelector("input[name='initial-name']").value;
+    userScore.name = nameInput;
+    userScore.scoreRecord = globalScore;
+    userArray.push(userScore)
+    debugger
+    localStorage.setItem("userScore", JSON.stringify(userArray));
+    
+}
+
+var loadTasks = function () {
+    var savedScores = localStorage.getItem("userScore");
+    //tasks === null
+    if (!savedScores) {
+        return false;
+    }
+    console.log(savedScores);
+    savedScores = JSON.parse(savedScores);
+    //loop throgh savedTasks array
+    for (var i = 0; i < savedScores.length; i++) {
+        //pass each task object into the createdTaskE1 function
+        createHighScore(savedScores[i]);
+    }
+
+}
+
+var createHighScore = function(savedScores){
+console.log(containerHscore);
+    var listScore = document.getElementById('list-scores');  
+    var createLi = document.createElement('li');
+    createLi.innerHTML = savedScores.name + savedScores.scoreRecord;
+    listScore.appendChild(createLi);
+    containerHscore.appendChild(listScore);
+    console.log(containerHscore);
+}
 
 //timer for the quiz ends when the timer is equal 0
 var quizTimer = function() {
@@ -144,7 +182,7 @@ var quizTimer = function() {
     // interval of the quiz
     var timeInterval = setInterval(function () {
 
-        if (timeLeft === 0) {
+        if (timeLeft === 0 || endQuestions === true) {
             timerEl.textContent = timeLeft;
             endQuiz(quizQuestions);
             clearInterval(timeInterval);
@@ -162,6 +200,7 @@ var quizTimer = function() {
     
     numQuestions = arrayQuestion.length;
     contQuestions = 0;
+    endQuestions = false;
     showResults();
 
    
@@ -232,6 +271,7 @@ var loadQuestions = function (arrayQuestion) {
     else {
         alert("fin");
         containerQuiz.style.display = "none";
+        endQuestions = true;
         globalScore = timeLeft;
 
     }
@@ -292,9 +332,12 @@ var eventMouseout = function (event) {
 var submitEvent = function(event){
     
     event.preventDefault();
+    saveHighScores();
     containerResults.style.display = "none";
     containerHscore.style.display = "flex";
     containerHscore.style.flexDirection = "column";
+
+    
 }
 
 var clearScore = function(){
@@ -334,3 +377,4 @@ containerHscore.addEventListener("click", handleHigh);
 containerQuiz.addEventListener("click", taskHandleQuiz);
 
 getStart();
+loadTasks();
