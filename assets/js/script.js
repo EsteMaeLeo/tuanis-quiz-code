@@ -123,7 +123,7 @@ var containerQuiz = document.getElementById('container-quiz');
 var containerResults = document.getElementById('container-results');
 var containerHscore = document.getElementById('container-hscore');
 
-var formE1 = document.querySelector("#task-form");
+var viewScore = document.getElementById('view-score');
 //get items for questions
 var questionList = document.getElementById('questions');
 
@@ -136,6 +136,7 @@ var globalScore = 0;
 var timeLeft = 75;
 var endQuestions = false;
 var userArray = [];
+var fileScore = "";
 
 //Function defenition section
 
@@ -143,19 +144,32 @@ var saveHighScores = function () {
     var nameInput = document.querySelector("input[name='initial-name']").value;
     userScore.name = nameInput;
     userScore.scoreRecord = globalScore;
-    userArray.push(userScore)
-    debugger
-    localStorage.setItem("userScore", JSON.stringify(userArray));
+
+    //var old = localStorage.getItem("userArray");
+    var oldItems = JSON.parse(localStorage.getItem('userArray'));
+    if(oldItems) {
+        // with the oll record need now append the new record
+        oldItems.push(userScore);
+        localStorage.setItem("userArray", JSON.stringify(oldItems));
+        fileScore = oldItems;
+        
+    }else{
+        userArray.push(userScore)
+        localStorage.setItem("userArray", JSON.stringify(userArray));
+        fileScore = userScore;
+   }
+   
+   document.querySelector("input[name='initial-name']").value = " ";
     
 }
 
 var loadTasks = function () {
-    var savedScores = localStorage.getItem("userScore");
+    var savedScores = localStorage.getItem("userArray");
     //tasks === null
     if (!savedScores) {
         return false;
     }
-    console.log(savedScores);
+
     savedScores = JSON.parse(savedScores);
     //loop throgh savedTasks array
     for (var i = 0; i < savedScores.length; i++) {
@@ -163,19 +177,32 @@ var loadTasks = function () {
         createHighScore(savedScores[i], i);
     }
 
+    fileScore = savedScores;
+
 }
 
 var createHighScore = function(savedScores, line){
-console.log(containerHscore);
+
     //add 1 to line because start 0
     line++;
 
     var listScore = document.getElementById('list-scores');  
     var createLi = document.createElement('li');
+    createLi.className = "score-item";
+    createLi.setAttribute('li-name-score', savedScores.name );
     createLi.innerHTML = line + ". " + "Name: " + savedScores.name + " Score: " +savedScores.scoreRecord;
     listScore.appendChild(createLi);
-    //containerHscore.appendChild(listScore);
-    console.log(containerHscore);
+
+}
+
+var removeListHighScore = function(){
+     
+    for (var i = 0; i < fileScore.length; i++) {
+        var taskSelected = document.querySelector(".score-item[li-name-score='" + fileScore[i].name + "']");
+        console.log(taskSelected);
+        taskSelected.remove();
+        
+    }
 }
 
 //timer for the quiz ends when the timer is equal 0
@@ -272,7 +299,7 @@ var loadQuestions = function (arrayQuestion) {
 
     }
     else {
-        // alert("fin");
+
         containerQuiz.style.display = "none";
         endQuestions = true;
         globalScore = timeLeft;
@@ -294,15 +321,14 @@ var startQuiz = function (event) {
 var taskHandleQuiz = function (event) {
 
     var questionAtt = event.target.getAttribute("list-question").toLowerCase();
-    console.log(questionAtt);
-    console.log(quizQuestions[contQuestions].correctAnswer);
+
     if (quizQuestions[contQuestions].correctAnswer === questionAtt) {
-        //alert("correct");
+
         contQuestions++;
         loadQuestions(quizQuestions)
 
     } else {
-        //alert("incorrect");
+
         timeLeft = timeLeft -10;
         contQuestions++;
         loadQuestions(quizQuestions);
@@ -336,6 +362,7 @@ var submitEvent = function(event){
     
     event.preventDefault();
     saveHighScores();
+    loadTasks();
     containerResults.style.display = "none";
     containerHscore.style.display = "flex";
     containerHscore.style.flexDirection = "column";
@@ -344,7 +371,7 @@ var submitEvent = function(event){
 }
 
 var clearScore = function(){
-
+    storage.clear();
 }
 
 var handleHigh = function(event){
@@ -360,6 +387,16 @@ var handleHigh = function(event){
     else if (targetE1.matches(".clr-score")) {
         clearScore();
     }
+}
+
+var eventScoresList = function(even){
+    event.preventDefault();
+    containerQuiz.style.display = "none";
+    containerResults.style.display = "none";
+    containerMessage.style.display = "none";
+    containerHscore.style.display = "flex";
+    
+    containerHscore.style.flexDirection = "column";
 }
 
 //event for move mouse in the list
@@ -378,6 +415,8 @@ containerResults.addEventListener("submit", submitEvent);
 containerHscore.addEventListener("click", handleHigh);
 
 containerQuiz.addEventListener("click", taskHandleQuiz);
+
+viewScore.addEventListener("click", eventScoresList)
 
 getStart();
 loadTasks();
