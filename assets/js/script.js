@@ -163,7 +163,7 @@ var saveHighScores = function () {
     
 }
 
-var loadTasks = function () {
+var loadScore = function () {
     var savedScores = localStorage.getItem("userArray");
     //tasks === null
     if (!savedScores) {
@@ -193,14 +193,16 @@ var createHighScore = function(savedScores, line){
     createLi.innerHTML = line + ". " + "Name: " + savedScores.name + " Score: " +savedScores.scoreRecord;
     listScore.appendChild(createLi);
 
+    var tagScore = document.getElementById('span-score');
+    tagScore.textContent = savedScores.scoreRecord;
+
 }
 
 var removeListHighScore = function(){
      
     for (var i = 0; i < fileScore.length; i++) {
-        var taskSelected = document.querySelector(".score-item[li-name-score='" + fileScore[i].name + "']");
-        console.log(taskSelected);
-        taskSelected.remove();
+        var listScore = document.querySelector(".score-item[li-name-score='" + fileScore[i].name + "']");
+        listScore.remove();
         
     }
 }
@@ -237,8 +239,13 @@ var quizTimer = function() {
 }
 //function create message with the result and for initials for the score
 var showResults = function(){
+    removeListHighScore();
     containerQuiz.style.display = "none";
-    containerResults.style.display = "grid";
+    timerEl.textContent = "";
+    var tagScore = document.getElementById('span-score');
+    tagScore.textContent = globalScore;
+    containerResults.style.display = "flex";
+    containerResults.style.flexDirection = "column";
 
 }
 
@@ -362,7 +369,7 @@ var submitEvent = function(event){
     
     event.preventDefault();
     saveHighScores();
-    loadTasks();
+    loadScore();
     containerResults.style.display = "none";
     containerHscore.style.display = "flex";
     containerHscore.style.flexDirection = "column";
@@ -390,12 +397,16 @@ var handleHigh = function(event){
 }
 
 var eventScoresList = function(even){
+
     event.preventDefault();
     containerQuiz.style.display = "none";
     containerResults.style.display = "none";
     containerMessage.style.display = "none";
-    containerHscore.style.display = "flex";
     
+    removeListHighScore();
+    loadScore();
+
+    containerHscore.style.display = "flex";
     containerHscore.style.flexDirection = "column";
 }
 
@@ -419,4 +430,3 @@ containerQuiz.addEventListener("click", taskHandleQuiz);
 viewScore.addEventListener("click", eventScoresList)
 
 getStart();
-loadTasks();
