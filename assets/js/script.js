@@ -139,28 +139,28 @@ var userArray = [];
 var fileScore = "";
 
 //Function defenition section
-
+//saving the scores into localstorage first read if there is previous local and put into the array to add and save with the new results
 var saveHighScores = function () {
     var nameInput = document.querySelector("input[name='initial-name']").value;
     userScore.name = nameInput;
     userScore.scoreRecord = globalScore;
 
-    //var old = localStorage.getItem("userArray");
+    //var oldtimes to read the previous
     var oldItems = JSON.parse(localStorage.getItem('userArray'));
-    if(oldItems) {
+    if (oldItems) {
         // with the oll record need now append the new record
         oldItems.push(userScore);
         localStorage.setItem("userArray", JSON.stringify(oldItems));
         fileScore = oldItems;
-        
-    }else{
+
+    } else {
         userArray.push(userScore)
         localStorage.setItem("userArray", JSON.stringify(userArray));
         fileScore = userScore;
-   }
-   
-   document.querySelector("input[name='initial-name']").value = " ";
-    
+    }
+
+    document.querySelector("input[name='initial-name']").value = " ";
+
 }
 
 var loadScore = function () {
@@ -181,16 +181,16 @@ var loadScore = function () {
 
 }
 
-var createHighScore = function(savedScores, line){
+var createHighScore = function (savedScores, line) {
 
     //add 1 to line because start 0
     line++;
 
-    var listScore = document.getElementById('list-scores');  
+    var listScore = document.getElementById('list-scores');
     var createLi = document.createElement('li');
     createLi.className = "score-item";
-    createLi.setAttribute('li-name-score', savedScores.name );
-    createLi.innerHTML = line + ". " + "Name: " + savedScores.name + " Score: " +savedScores.scoreRecord;
+    createLi.setAttribute('li-name-score', savedScores.name);
+    createLi.innerHTML = line + ". " + "Name: " + savedScores.name + " Score: " + savedScores.scoreRecord;
     listScore.appendChild(createLi);
 
     var tagScore = document.getElementById('span-score');
@@ -198,17 +198,19 @@ var createHighScore = function(savedScores, line){
 
 }
 
-var removeListHighScore = function(){
-     
+var removeListHighScore = function () {
+
     for (var i = 0; i < fileScore.length; i++) {
         var listScore = document.querySelector(".score-item[li-name-score='" + fileScore[i].name + "']");
-        listScore.remove();
-        
+        if (listScore) {
+            listScore.remove();
+        }
+
     }
 }
 
 //timer for the quiz ends when the timer is equal 0
-var quizTimer = function() {
+var quizTimer = function () {
     timeLeft = 75;
 
     // interval of the quiz
@@ -224,21 +226,21 @@ var quizTimer = function() {
         timerEl.textContent = timeLeft;
         //substract to the timer
         timeLeft--;
-        //1000
+
     }, 1000);
 }
 
- var endQuiz = function(arrayQuestion) {
-    
+var endQuiz = function (arrayQuestion) {
+
     numQuestions = arrayQuestion.length;
     contQuestions = 0;
     endQuestions = false;
     showResults();
 
-   
+
 }
 //function create message with the result and for initials for the score
-var showResults = function(){
+var showResults = function () {
     removeListHighScore();
     containerQuiz.style.display = "none";
     timerEl.textContent = "";
@@ -320,10 +322,11 @@ var startQuiz = function (event) {
     containerMessage.style.display = "none";
     randomdQuestions(quizQuestions);
     containerQuiz.style.display = "flex";
-    
+
     loadQuestions(quizQuestions);
     quizTimer()
 }
+
 
 var taskHandleQuiz = function (event) {
 
@@ -336,7 +339,7 @@ var taskHandleQuiz = function (event) {
 
     } else {
 
-        timeLeft = timeLeft -10;
+        timeLeft = timeLeft - 10;
         contQuestions++;
         loadQuestions(quizQuestions);
     }
@@ -348,7 +351,7 @@ var eventMouseover = function (event) {
     var questionAtt = event.target.getAttribute("list-question");
     if (questionAtt) {
         event.target.style.color = "orange"
-        event.target.font="Arial";
+        event.target.font = "Arial";
         event.target.style.backgroundColor = "#8B7CCE";
 
     }
@@ -365,8 +368,8 @@ var eventMouseout = function (event) {
     }
 }
 
-var submitEvent = function(event){
-    
+var submitEvent = function (event) {
+
     event.preventDefault();
     saveHighScores();
     loadScore();
@@ -374,14 +377,15 @@ var submitEvent = function(event){
     containerHscore.style.display = "flex";
     containerHscore.style.flexDirection = "column";
 
-    
+
 }
 
-var clearScore = function(){
-    storage.clear();
+var clearScore = function () {
+
+    localStorage.clear();
 }
 
-var handleHigh = function(event){
+var handleHigh = function (event) {
 
     var targetE1 = event.target;
 
@@ -389,6 +393,7 @@ var handleHigh = function(event){
     if (targetE1.matches(".bck-main")) {
         containerMessage.style.display = "flex";
         containerMessage.style.flexDirection = "column";
+        timerEl.textContent = " ";
         getStart();
     } //clear score button was clicked
     else if (targetE1.matches(".clr-score")) {
@@ -396,13 +401,14 @@ var handleHigh = function(event){
     }
 }
 
-var eventScoresList = function(even){
+var eventScoresList = function (even) {
 
     event.preventDefault();
+    timerEl.textContent = "";
     containerQuiz.style.display = "none";
     containerResults.style.display = "none";
     containerMessage.style.display = "none";
-    
+
     removeListHighScore();
     loadScore();
 
