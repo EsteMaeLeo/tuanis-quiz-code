@@ -221,6 +221,7 @@ var quizTimer = function () {
     var timeInterval = setInterval(function () {
 
         if (timeLeft <=0 || endQuestions === true) {
+            //if end of questions or time end the quiz
             timerEl.textContent = timeLeft;
             endQuiz(quizQuestions);
             clearInterval(timeInterval);
@@ -246,12 +247,13 @@ var endQuiz = function (arrayQuestion) {
 }
 //function create message with the result and for initials for the score
 var showResults = function () {
-
+    //remove previous list
     removeListHighScore();
     containerQuiz.style.display = "none";
     timerEl.textContent = "";
     var tagScore = document.getElementById('span-score');
     tagScore.textContent = globalScore;
+    //show the box of the results
     containerResults.style.display = "flex";
     containerResults.style.flexDirection = "column";
 
@@ -319,26 +321,30 @@ var loadQuestions = function (arrayQuestion) {
     }
 }
 
+//start function prevent the default display container questions
 var startQuiz = function (event) {
     //hide the start container 
     event.preventDefault();
     containerMessage.style.display = "none";
     randomdQuestions(quizQuestions);
     containerQuiz.style.display = "flex";
-
+    //load question
     loadQuestions(quizQuestions);
+    //start the counter time
     quizTimer()
 }
 
-
+//handle the click in the list for each response of the questions
 var taskHandleQuiz = function (event) {
 
     var questionAtt = event.target.getAttribute("list-question").toLowerCase();
 
+    //validate the click with the correct answer
     if (quizQuestions[contQuestions].correctAnswer === questionAtt) {
 
         contQuestions++;
         var questionAtt = document.getElementById("question-message");
+        //put message correct
         questionAtt.style.opacity = "0.5";
         questionAtt.style.fontSize = "x-large";
         questionAtt.textContent = "Correct :-)";
@@ -350,6 +356,7 @@ var taskHandleQuiz = function (event) {
         timeLeft = timeLeft - 10;
         contQuestions++;
         var questionAtt = document.getElementById("question-message");
+        //put message incorrect
         questionAtt.style.opacity = "0.5";
         questionAtt.style.fontSize = "x-large";
         questionAtt.textContent = "Incorrect :-(";
@@ -360,7 +367,9 @@ var taskHandleQuiz = function (event) {
 
 }
 
+//mouse is over the list
 var eventMouseover = function (event) {
+     // highlight the mouseout target
     var questionAtt = event.target.getAttribute("list-question");
     if (questionAtt) {
         event.target.style.color = "orange"
@@ -370,8 +379,9 @@ var eventMouseover = function (event) {
     }
 }
 
+// when the mouse is out
 var eventMouseout = function (event) {
-    // highlight the mouseout target
+   
 
     var questionAtt = event.target.getAttribute("list-question");
     if (questionAtt) {
@@ -381,12 +391,14 @@ var eventMouseout = function (event) {
     }
 }
 
+//function submit save the results
 var submitEvent = function (event) {
 
     event.preventDefault();
     saveHighScores();
     loadScore();
 
+    //clear styles and display container results
     var questionAtt = document.getElementById("question-message");
     questionAtt.textContent = " ";
     questionAtt.style.borderBottom = null
@@ -398,6 +410,7 @@ var submitEvent = function (event) {
 
 }
 
+//clear values localstorage and list
 var clearScore = function () {
 
     localStorage.clear();
@@ -412,6 +425,7 @@ var clearScore = function () {
     questionAtt.style.borderBottom = null
 }
 
+//handle the event for the container of scores
 var handleHigh = function (event) {
 
     var targetE1 = event.target;
@@ -431,6 +445,7 @@ var handleHigh = function (event) {
     }
 }
 
+//show the scores and load themm
 var eventScoresList = function (even) {
 
     event.preventDefault();

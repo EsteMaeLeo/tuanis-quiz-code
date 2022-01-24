@@ -77,12 +77,13 @@ ul{
     height: 100%;
 }
 
+/*stlying the navigation*/
 .navquiz ul{
     display: flex;
     flex-wrap: wrap;
     
 }
-
+/*stlying the navigation*/
 .navquiz ul li{
     margin-left: 50px;
     padding-right: 30px;
@@ -169,6 +170,7 @@ ul{
   
 }
 
+/*style the buttons html*/
 .btstart{
     
     margin:10px;
@@ -227,10 +229,18 @@ ul{
 }
 @media(max-width: 575px){
     .navquiz .container{ 
-        display:block;
+        display:block
+       
     }
+    .navquiz.responsive {
+        position: relative;
+    }
+
     .navquiz ul li{
         margin: 0.5em 0;
+        float: none;
+        display: block;
+        text-align: left;
         
     }
 }
